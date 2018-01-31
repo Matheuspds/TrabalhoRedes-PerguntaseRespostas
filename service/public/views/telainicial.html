@@ -1,0 +1,113 @@
+<div  class="" ng-init="inicializar()">
+
+    <nav class="light lighten-1 black" role="navigation">
+      <div  class="nav-wrapper container " >
+          <a id="logo-container" href="#" class="brand-logo center">Perguntando da Rede</a>
+          <a id="download-button" class="right hide-on-med-and-down btn-large waves-effect waves-light black z-depth-4 btn col s2 offset-s8 " href="/app">Novo Jogo!</a>
+          <a class="btn btn-large waves-effect waves-length black col s8 offset-s1"  ng-click="procurarVencedor()">Veja o ranking atual!</a> <br>
+      </div>
+    </nav>
+
+
+  <div  class="container " ng-if="showCadastro">
+    <div class="row center" >
+      <div class="section col s4 push-s4 text-black" style="margin-top:150px;" ng-if="!rank">
+        <h4>Digite seu nome: </h4>
+        <div input-field >
+          <!-- <i class="material-icons prefix">account_circle</i> -->
+          <input type="text" ng-model="usuario.nick">
+          <label>Nickname</label>
+        </div>
+        <button class="btn waves-effect waves-length" type="button" name="Entrar" ng-click="enviarJogador()">Entrar</button>
+      </div>
+      
+      <div class=" section col s4 push-s4 text-black" style="overflow:auto;height:400px; width:350px; margin-top:20px; ">
+        <table class="striped" class="centered" ng-if="rank">
+          <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Pontuação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat = "jogador in jogadores | orderBy: '-resultado'">
+              <td>{{jogador.nick}}</td>
+              <td>{{jogador.resultado}}</td>
+            </tr>
+          </tbody>
+        </table><br>
+      </div>
+    </div>
+  </div>
+
+
+  <div ng-if="!showCadastro" class="center">
+
+    <h5>Você está jogando como: {{usuario.nick}}</h5>
+
+    <a class="waves-effect waves-light black btn col s2"><i class="material-icons left"></i>Redes de Computadores</a>
+    <a class="waves-effect waves-light black btn col s2"><i class="material-icons left"></i>Transporte</a>
+    <a class="waves-effect waves-light black btn col s2"><i class="material-icons left"></i>Rede</a>
+    <a class="waves-effect waves-light black btn col s2"><i class="material-icons left"></i>Aplicação</a>
+    <a class="waves-effect waves-light black btn col s2"><i class="material-icons left"></i>Outras Camadas</a><br><br><br>
+
+
+
+    <div class="row" ng-if="!showCadastro && showBotaoJogar">
+      <h3>Clique em Jogar para iniciar as questões. </h3>
+      <button class="btn btn-large black waves-effect waves-lengt" type="button" name="Jogar" ng-click="buscarPergunta()">Jogar</button>
+    </div>
+
+    <div class="row" style="margin-top: -25px;" ng-if="!showBotaoJogar && !usuario.ativo">
+      <div class="container-fluid" style="margin-top: -25px;">
+          <div style="margin-bottom: -25px; margin-top: -25px;"class="row">
+            <div class="card-panel yellow lighten-3 z-depth-2">
+                <h5>{{pergunta.enunciado}}</h5>
+            </div> <br>
+          </div>
+        </div>
+      <div class="row">
+            <a class="waves-effect waves-light btn black col s10 offset-s1" ng-click = 'resultado(0)'>{{pergunta.alternativas[0]}}</a><br><br>
+            <a class="waves-effect waves-light btn black col s10 offset-s1" ng-click = 'resultado(1)'>{{pergunta.alternativas[1]}}</a><br><br>
+            <a class="waves-effect waves-light btn black col s10 offset-s1" ng-click = 'resultado(2)'>{{pergunta.alternativas[2]}}</a><br><br>
+        </div>
+    </div>
+
+    <div class="row" ng-if="usuario.ativo && jogadores.length==0">
+      <a class="btn btn-large waves-effect waves-length" ng-click="enviarResultado()">Enviar Resultado</a>
+    </div>
+    <div class="container "  style="overflow:auto;height:300px; width:500px">
+    <div class="col s10"  style="background-color: grey;">
+
+      <table class="striped" class="centered" ng-if="jogadores.length > 0">
+        <thead>
+          <tr>
+              <th>Nome</th>
+              <th>Pontuação</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr ng-repeat = "jogador in jogadores | orderBy: '-resultado'">
+            <td>{{jogador.nick}}</td>
+            <td>{{jogador.resultado}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  </div>
+
+      <footer  style="position:absolute;	bottom:0;	width:100%;"class="page-footer black ">
+        <div class="container">
+          <div align="left" class="row">
+            <div  class="col l6 s12">
+              <h5 class="white-text">Trabalho de Redes</h5>
+              <p class="grey-text text-lighten-4">5º Semestre, Professor: Francisco Helder, Trabalho Avaliativo FInal.</p>
+
+            </div>
+          </div>
+        </div>
+      </footer>
+</div>

@@ -1,0 +1,62 @@
+<div class="" style="background-image: url('../images/teste.jpg');" ng-init="inicializar()">
+  <div class="center" ng-if="showCadastro">
+    <h4>Digite seu nome: </h4>
+    <div class="row">
+      <div class="section col s4 push-s4">
+        <div input-field>
+          <input type="text" ng-model="usuario.nick">
+          <label>Nickname</label>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <button class="btn waves-effect waves-length" type="button" name="Entrar" ng-click="enviarJogador()"> Entrar</button>
+    </div>
+  </div>
+
+  <div ng-if="!showCadastro" class="center">
+    <h5>Você está jogando como: {{usuario.nick}}</h5>
+
+    <a class="waves-effect waves-light btn col s2"><i class="material-icons left">rss_feed</i>Redes de Computadores</a>
+    <a class="waves-effect waves-light btn col s2"><i class="material-icons left">rss_feed</i>Transporte</a>
+    <a class="waves-effect waves-light btn col s2"><i class="material-icons left">rss_feed</i>Rede</a>
+    <a class="waves-effect waves-light btn col s2"><i class="material-icons left">rss_feed</i>Aplicação</a>
+    <a class="waves-effect waves-light btn col s2"><i class="material-icons left">rss_feed</i>Outras Camadas</a><br><br><br><br>
+
+    <div class="row" ng-if="!showCadastro && showBotaoJogar"><br><br>
+      <button class="btn btn-large waves-effect waves-lengt" type="button" name="Jogar" ng-click="buscarPergunta()">Jogar</button>
+    </div>
+
+    <div class="row" ng-if="!showBotaoJogar && !usuario.ativo">
+        <h5>{{pergunta.enunciado}}</h5><br>
+        <div class="row">
+            <a class="waves-effect waves-light btn col s4 push-s4" ng-click = 'resultado(0)'>{{pergunta.alternativas[0]}}</a><br><br>
+            <a class="waves-effect waves-light btn col s4 push-s4" ng-click = 'resultado(1)'>{{pergunta.alternativas[1]}}</a><br><br>
+            <a class="waves-effect waves-light btn col s4 push-s4" ng-click = 'resultado(2)'>{{pergunta.alternativas[2]}}</a><br><br>
+        </div>
+    </div>
+
+    <div class="row" ng-if="usuario.ativo && jogadores.length==0">
+      <a class="btn btn-large waves-effect waves-length" ng-click="enviarResultado()">Enviar Resultado</a>
+    </div>
+
+    <div class="center">
+      <table class="striped" class="centered" ng-if="jogadores.length > 0">
+        <thead>
+          <tr>
+              <th>Nome</th>
+              <th>Pontuação</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr ng-repeat = "jogador in jogadores | orderBy: '-resultado'">
+            <td>{{jogador.nick}}</td>
+            <td>{{jogador.resultado}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
